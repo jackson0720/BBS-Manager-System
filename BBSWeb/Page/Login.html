@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>TPHONE论坛社区后台管理系统-登录</title>
+    <style>
+        body {
+            background-color: #363A45;
+        }
+
+        .Body {
+            border: none;
+            width: 100%;
+            height: 800px;
+            margin: 10px auto;
+        }
+
+        .top-nav {
+            width: 100%;
+            height: 120px;
+            float: left;
+            background-color: #44495A;
+            color:white;
+        }
+
+        .Logo {
+            width: 300px;
+            height: 110px;
+            background-image: url(../img/logo.png);
+            float: left;
+        }
+
+        .Logo-title {
+            margin-top: 10px;
+            width: 300px;
+            height: 50px;
+            float: left;
+        }
+
+        .Main {
+            border: none;
+            width: 100%;
+            height: 600px;
+            background-position: center;
+            float: left;
+        }
+
+        .Main-body {
+            border: none;
+            margin: 101px;
+            margin-left: 280px;
+            background-color: #44495A;
+            width: 60%;
+            height: 400px;
+            float: left;
+            border-radius: 30px;
+        }
+
+        .input1 {
+            border-radius: 8px;
+            width: 320px;
+            height: 50px;
+            margin-top: 20px;
+            margin-left: 240px;
+            margin-bottom: 30px;
+            font-size: 20px;
+        }
+
+        .input2 {
+            border-radius: 8px;
+            width: 320px;
+            height: 50px;
+            margin-top: 10px;
+            margin-left: 240px;
+            margin-bottom: 30px;
+            font-size: 20px;
+        }
+
+        .submit {
+            background-color: #FF7701; /* Green */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            border-radius: 8px;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            width: 320px;
+            height: 50px;
+            margin-top: 10px;
+            margin-left: 240px;
+            margin-bottom: 30px;
+            font-size: 20px;
+        }
+
+        .submit1 {
+            background-color: #FF7701;
+        }
+
+            .submit1:hover {
+                border-radius: 8px;
+                cursor: pointer;
+                background-color: #008CBA;
+            }
+
+        .foot {
+            border: 0px solid red;
+            width: 100%;
+            height: 80px;
+            float: left;
+            color:white;
+        }
+
+        .foot-body {
+            margin-left: 230px;
+            margin-top: 35px;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript" src="../Scripts/jquery-3.3.1.min.js"></script>
+    <div class="Body">
+        <div class="top-nav">
+            <div class="Logo"></div>
+            <div class="Logo-title">
+                <h3>后台管理系统V1.0</h3>
+            </div>
+            <div class="Logo-title">
+                <h4>欢迎使用TPHONE网站后台管理系统</h4>
+            </div>
+            <div class="Logo-title">
+                当前日期为：<h4 id="time"> </h4>
+            </div>
+        </div>
+        <div class="Main">
+            <div class="Main-body">
+                <h2 align="center" style="color:white;">登           录</h2>
+                <form action="#" method="post" id="f1">
+                    <input class="input1" type="text" id="name" name="name" placeholder="请输入用户名" /><br />
+                    <input class="input2" type="password" id="password" name="password" placeholder="请输入密码" /><br />
+                    <input class="submit submit1" type="button" id="go" value="登录" />
+                </form>
+            </div>
+        </div>
+        <div class="foot">
+            <div class="foot-body">
+                <h5>T-Phone(tphone.com) | <a href="#">关于我们</a> | <a href="#">联系我们</a>| <a href="#">@新浪微博</a> | TPHONE-CHINA | 粤ICP备12009483号-3 | T-Phone(tphone.com)始终以人为本的服务！</h5>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/LoginScript.js">
+        
+    </script>
+</body>
+
+</html>

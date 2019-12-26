@@ -1,0 +1,493 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>TPHONE论坛社区后台管理系统-主页面</title>
+    <style>
+        body {
+            background-color: #363A45;
+        }
+
+        a {
+            text-decoration:none;
+            color:white;
+        }
+            a:hover {
+                color: #669DF6;
+            }
+
+        .Body {
+            border: none;
+            width: 100%;
+            height: 800px;
+            margin: 10px auto;
+        }
+
+        .top-nav {
+            width: 100%;
+            height: 120px;
+            float: left;
+            background-color: #44495A;
+            color:white;
+        }
+
+        .Logo {
+            width: 300px;
+            height: 110px;
+            background-image: url(../img/logo.png);
+            float: left;
+        }
+
+        .Logo-title {
+            margin-top: 10px;
+            width: 300px;
+            height: 50px;
+            float: left;
+        }
+
+        .Main {
+            border: 0px solid red;
+            width: 100%;
+            height: 700px;
+            background-position: center;
+            float: left;
+        }
+
+        .Main-left-body {
+            border: 0px solid red;
+            width: 20%;
+            height: 700px;
+            float: left;
+        }
+        .Main-right-body {
+            border: 0px solid red;
+            width: 79.8%;
+            height: 700px;
+            float: left;
+        }
+
+        .foot {
+            border: 0px solid red;
+            width: 100%;
+            height: 80px;
+            float: left;
+            color:white;
+        }
+
+        .foot-body {
+            margin-left: 230px;
+            margin-top: 35px;
+        }
+
+        .wrap {
+            width: 267px;
+            height: 100%;
+            background-color: #363a45;
+        }
+
+        .header {
+            width: 100%;
+            height: 35px;
+            background-color: #44495a;
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            line-height: 35px;
+        }
+
+        .nav {
+            width: 250px;
+            position:relative;
+            right:10px;
+        }
+        .nav ul {
+            list-style:none;
+        }
+
+        .list {
+            margin-bottom: 5px;
+        }
+
+            .list h2 {
+                position: relative;
+                padding: 15px 0;
+                background-color: #3889d4;
+                text-align: center;
+                font-size: 16px;
+                color: #fff;
+                transition: .5s;
+                cursor:pointer;
+            }
+
+                .list h2.on {
+                    background-color: #393c4a;
+                }
+
+            .list i {
+                position: absolute;
+                right: 10px;
+                top: 16px;
+                border: 8px solid transparent;
+                border-left-color: #fff; /*triangle*/
+                transform: rotate(0deg);
+                transform-origin: 1px 8px;
+                transition: .5s;
+            }
+
+                .list i.on {
+                    transform: rotate(90deg);
+                }
+
+        .hide {
+            overflow: hidden;
+            height: 0;
+            transition: .5s;
+        }
+
+        .hide h4 {
+            padding: 5px 0;
+            background-color: #282c3a;
+            text-align: center;
+            color: #fff;
+            border-bottom: #42495d;
+            cursor:pointer;
+        }
+        
+    </style>
+    <!--<link  href="../css/leftnav.css" rel="stylesheet">-->
+</head>
+<body>
+    <script src="../Scripts/jquery-3.3.1.min.js"></script>
+    <div class="Body">
+        <div class="top-nav">
+            <div class="Logo"></div>
+            <div class="Logo-title">
+                <h3>后台管理系统V1.0</h3>
+            </div>
+            <div class="Logo-title">
+                <h4>当前时间为：<span id="time"> </span></h4>
+            </div>
+            <div class="Logo-title">
+                <h4>您好，<span id="name"></span><br /></h4>
+                
+            </div>
+        </div>
+        <div class="Main">
+            <div class="Main-left-body">
+                <div class="wrap">
+                    <div class="header">主   功   能   区</div>
+                    <div class="nav">
+                        <ul>
+                            <li class="list">
+                                <h2><i></i>用户管理</h2>
+                                <div class="hide">
+                                    <h4 id="listUser">注册用户</h4>
+                                    <h4 id="listGroup">用户组管理</h4>
+                                </div>
+                            </li>
+                            <li class="list">
+                                <h2><i></i>文章管理</h2>
+                                <div class="hide">
+                                    <h4 id="listPosts">文章管理</h4>
+                                </div>
+                            </li>
+                            <li class="list">
+                                <h2><i></i>评论管理</h2>
+                                <div class="hide">
+                                    <h4 id="listComment">评论管理</h4>
+                                </div>
+                            </li>
+                            <li class="list">
+                                <h2><i></i>版务管理</h2>
+                                <div class="hide">
+                                    <h4 id="listPlate">版块管理</h4>
+                                    <h4 id="listPort">反馈处理</h4>
+                                </div>
+                            </li>
+                            <li class="list">
+                                <h2><i></i>系统管理</h2>
+                                <div class="hide">
+                                    <h4 id="listAdmins">账号管理</h4>
+                                    <h4 id="listOperalog">操作日志</h4>
+                                    <h4 id="Databackup">数据备份</h4>
+                                    <h4>关于系统</h4>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="Main-right-body" id="show">
+                <iframe style="width:100%;height:700px;" id="address" src="Welcome.html"></iframe>
+            </div>
+        </div>
+        <div class="foot">
+            <div class="foot-body">
+                <h5>T-Phone后台管理系统 | <a href="#">开发者：杨俊杰</a> | <a href="#">开原许可：GPL3.0</a>| <a href="#">网站数据统计</a> | TPHONE-CHINA | T-Phone(tphone.com)始终以人为本的服务！</h5>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        history.go(1);
+
+       
+
+        (function () {
+            var oList = document.querySelectorAll('.list h2'),
+                oHide = document.querySelectorAll('.hide'),
+                oIcon = document.querySelectorAll('.list i'),
+                lastIndex = 0;
+            for (var i = 0; i < oList.length; i++) {
+                oList[i].index = i;//自定义属性
+                oList[i].isClick = false;
+                oList[i].initHeight = oHide[i].clientHeight;
+                oHide[i].style.height = '0';
+                oList[i].onclick = function () {
+                    if (this.isClick) {
+                        oHide[this.index].style.height = '0';
+                        oIcon[this.index].className = '';
+                        oList[this.index].className = '';
+                        oList[this.index].isClick = false;
+                    }
+                    else {
+                        oHide[lastIndex].style.height = '0';
+                        oIcon[lastIndex].className = '';
+                        oList[lastIndex].className = '';
+                        oHide[this.index].style.height = '220px';
+                        oIcon[this.index].className = 'on';
+                        oList[this.index].className = 'on';
+                        oList[lastIndex].isClick = false;
+                        oList[this.index].isClick = true;
+                        lastIndex = this.index;
+                    }
+                }
+            }
+        })();
+    </script>
+
+    <script>
+        var mydate = new Date();
+        var t = mydate.toLocaleDateString();
+        $("#time").text(t);
+
+        $(function () {
+
+            
+
+
+
+            $("#Databackup").on('click', function () {
+                if ($("#account").length > 0) {
+                    if ($("#account").val() != "admin") {
+                        alert("你非超级管理员身份，无法进行此操作");
+                    } else {
+                        $("#address").attr("src", "AdminOpera.html");
+                        $.ajax({
+                            url: '/Operationlog/InsertOperalog?log_admin=' + $("#account").val() + '&log_text=' + $("#name").val() + "在" + mydate.toLocaleString() + "进行了数据备份操作！",
+                            method: "get",
+                            success: function (data) {
+
+                            }
+                        })
+                    }
+                } else {
+                    alert("您还未进行登录操作，请先前往登录！");
+                    window.location.replace('Login.html');
+                }
+            })
+
+            $("#listPort").on('click', function () {
+                if ($("#account").length > 0) {
+                    $("#address").attr("src", "PortOpera.html");
+                        $.ajax({
+                            url: '/Operationlog/InsertOperalog?log_admin=' + $("#account").val() + '&log_text=' + $("#account").val() + "在" + mydate.toLocaleString() + "查看了后台反馈列表！",
+                            method: "get",
+                            success: function (data) {
+                            }
+                        })
+                    }else {
+                    alert("您还未进行登录操作，请先前往登录！");
+                    window.location.replace('Login.html');
+                }
+            })
+
+            $("#listGroup").on('click', function () {
+                if ($("#account").length > 0) {
+                    $("#address").attr("src", "UserGroup.html");
+                    $.ajax({
+                        url: '/Operationlog/InsertOperalog?log_admin=' + $("#account").val() + '&log_text=' + $("#account").val() + "在" + mydate.toLocaleString() + "查看了后台用户组列表！",
+                        method: "get",
+                        success: function (data) {
+                        }
+                    })
+                } else {
+                    alert("您还未进行登录操作，请先前往登录！");
+                    window.location.replace('Login.html');
+                }
+            })
+
+            
+
+
+            $("#listOperalog").on('click', function () {
+                if ($("#account").length > 0) {
+                    if ($("#account").val() != "admin") {
+                        alert("你非超级管理员身份，无法进行此操作");
+                    } else {
+                        $("#address").attr("src", "Operationlog.html");
+                        $.ajax({
+                            url: '/Operationlog/InsertOperalog?log_admin=' + $("#account").val() + '&log_text=' + $("#account").val() + "在" + mydate.toLocaleString() + "查看了操作日志！",
+                            method: "get",
+                            success: function (data) {
+
+                            }
+                        })   
+                    }
+                } else {
+                    alert("您还未进行登录操作，请先前往登录！");
+                    window.location.replace('Login.html');
+                }
+            })
+
+            $("#listAdmins").on('click', function () {
+                if ($("#account").length > 0) {
+                    if ($("#account").val() != "admin") {
+                        alert("你非超级管理员身份，无法进行此操作");
+                    } else {
+                        $("#address").attr("src", "AdminOpera.html");
+                        $.ajax({
+                            url: '/Operationlog/InsertOperalog?log_admin=' + $("#account").val() + '&log_text=' + $("#account").val() + "在" + mydate.toLocaleString() + "查看了后台管理员列表！",
+                            method: "get",
+                            success: function (data) {
+
+                            }
+                        })
+                        
+                       
+                    }
+                } else {
+                    alert("您还未进行登录操作，请先前往登录！");
+                    window.location.replace('Login.html');
+                }
+            })
+
+            $("#listComment").on('click', function () {
+                $("#address").attr("src", "CommentOpera.html");
+                $.ajax({
+                    url: '/Operationlog/InsertOperalog?log_admin=' + $("#account").val() + '&log_text=' + $("#account").val() + "在" + mydate.toLocaleString() + "查看了网站评论列表！",
+                    method: "get",
+                    success: function (data) {
+
+                    }
+                })
+               
+                
+            })
+
+            $("#listPlate").on('click', function () {
+                $("#address").attr("src", "PlateOpera.html");
+                $.ajax({
+                    url: '/Operationlog/InsertOperalog?log_admin=' + $("#account").val() + '&log_text=' + $("#account").val() + "在" + mydate.toLocaleString() + "查看了网站板块列表！",
+                    method: "get",
+                    success: function (data) {
+
+                    }
+                })
+            })
+
+            
+
+            $.ajax({
+                url: '/Login/Index',
+                method: "get",
+                success: function (data) {
+                    //alert(data);
+                    $("#name").append(
+                        data + '<br/><a href="#">查看信息</a>' +
+                        '&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" id="exit">退出</a>'
+                    )
+                    $("#exit").on('click', function () {
+                        if (confirm("确认退出系统吗？")) {
+                            window.opener = null;
+                            window.open("", "_self");
+                            $.ajax({
+                            url: '/Login/ClearSession',
+                            method: "get",
+                            success: function (data) {
+                                $.ajax({
+                                    url: '/Operationlog/InsertOperalog?log_admin=' + $("#account").val() + '&log_text=' + $("#account").val() + "在" + mydate.toLocaleString() + "退出了系统！",
+                                    method: "get",
+                                    success: function (data) {
+
+                                    }
+                                })
+                                alert(data);
+                                sessionStorage.clear();
+                                window.location.replace('Login.html');
+                                window.history.forward(1);
+
+                            }
+                        })
+                            //window.close();
+                            
+                        }
+                        
+                    })
+                }
+
+            })
+            $.ajax({
+                url: '/Login/Account',
+                method: "get",
+                success: function (data) {
+                    //alert(data);
+                    if (data != null) {
+                        $(".Logo-title").append(
+                            '<input type="hidden" value="' + data + '" id="account" />'
+                        )
+                    } else {
+                        $(".Logo-title").append(
+                            '<input type="hidden" value=" " id="account" />'
+                        )
+                    }
+                    
+                    
+                }
+            })
+            
+
+            $("#listPosts").click(function () {
+                $("#address").attr("src", "PostsOpera.html");
+                var loginfo = {
+                    "log_admin": $("#account").val(),
+                    "log_text": $("#account").val() + "在" + mydate.toLocaleString() + "查看了网站文章列表！",
+                };
+                $.ajax({
+                    url: '/Operationlog/InsertOperalog',
+                    data: loginfo,
+                    async: false,
+                    method: "post",
+                    success: function (data) {
+                        //alert(data);
+                    }
+                })
+                
+                
+            })
+
+            $("#listUser").on('click', function () {
+                $("#address").attr("src", "UserOpera.html");
+                $.ajax({
+                    url: '/Operationlog/InsertOperalog?log_admin=' + $("#account").val() + '&log_text=' + $("#account").val() + "在" + mydate.toLocaleString() + "查看了网站用户列表！",
+                    method: "get",
+                    success: function (data) {
+
+                    }
+                })
+                
+            })
+        })
+    </script>
+</body>
+</html>

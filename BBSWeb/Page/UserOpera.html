@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    
+    <style type="text/css">
+        .Serach {
+            margin: 5px auto;
+            padding: 5px;
+            width: 600px;
+            height: 120px;
+            border: 0px solid red;
+        }
+
+        .Serach-box {
+            width: 600px;
+            height: 20px;
+            position: relative;
+            left: 140px;
+            top: 12px;
+        }
+        .fa-question-circle {
+            cursor: pointer;
+        }
+
+        .demo {
+            width: 500px;
+            font-size: 12px;
+            height: 300px;
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 12px 14px 15px #eeeaea;
+        }
+
+            .demo p {
+                padding: 5px 8px;
+            }
+
+            .demo:after {
+                content: '';
+                position: absolute;
+                border: 10px solid transparent;
+                border-top-color: #ffffff;
+                top: 100%;
+                /*left: 37px;*/
+                left: 37%;
+            }
+    </style>
+    <link href="../css/font-awesome.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <script src="../Scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="../Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <h4 style="margin:20px;">更改的状态：</h4>
+                <select style="margin-left:50px;width:190px;" id="s1" class="form-control">
+                    <option value="0">启用</option>
+                    <option value="1">禁用</option>
+                </select><br />
+                <button class="btn btn-default OK" style="margin-left:120px;">确    定</button><br />
+                <br />
+            </div>
+        </div>
+    </div>
+    
+    <div class="Serach">
+        <h4 style="text-align:center;">后 台 数 据 库 用  户 总 数<b id="count"></b></h4>
+        <div class="demo" style="display:none;">
+            
+        </div>
+        <div class="Serach-box">
+            <h4><input class="form-control" type="text" id="name" onkeypress="entersearch()" placeholder="请输入用户账号进行搜索，按回车键结束" /></h4>
+
+        </div>
+    </div>
+    <div style="overflow:auto;">
+        <table border="1" id="show" class="table table-bordered">
+            <tr>
+                <td>用户ID</td>
+                <td>用户账号</td>
+                <td>用户邮箱</td>
+                <td>实名名字</td>
+                <td>所在用户组</td>
+                <td>最后一次登录IP</td>
+                <td>注册日期</td>
+                <td>状       态</td>
+                <td>操       作</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function ToJavaScriptDate(value) {
+            var pattern = /Date\(([^)]+)\)/;
+            var results = pattern.exec(value);
+            var dt = new Date(parseFloat(results[1]));
+            return dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate();
+        }
+
+        
+
+        function entersearch() {
+            var event = window.event || arguments.callee.caller.arguments[0];
+            if (event.keyCode == 13) {
+                if ($("#name").val() == "") {
+                    alert("请输入要查找的用户账号");
+                } else {
+                    $.ajax({
+                        url: '/Users/ListUserByUid?account=' + $("#name").val(),
+                        method: "get",
+                        success: function (data) {
+                            if (data.U_uid == null) {
+                                alert("未找到任何信息");
+                                window.location.reload();
+                            } else {
+                                $('#show tr:not(:first)').remove();
+                                var state = data.U_state == 0 ? '正常' : '异常';
+                                $("#show").append(
+                                    '<tr>' +
+                                    '<td>' + data.U_uid + '</td>' +
+                                    '<td>' + data.U_account + '</td>' +
+                                    '<td>' + data.U_email + '</td>' +
+                                    '<td>' + data.U_name + '</td>' +
+                                    '<td>' + data.U_codename + '</td>' +
+                                    '<td>' + data.U_ip + '</td>' +
+                                    '<td>' + ToJavaScriptDate(data.U_regtime) + '</td>' +
+                                    '<td>' + state + '</td>' +
+                                    '<td><input type="hidden" value="' + data.U_uid + '" id="uid"/><button class="btn btn-default listinfo" type="button">查看</button>&nbsp;&nbsp;<button class="btn btn-default opera" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">修改</button></td>' +
+                                    '</tr>'
+                                )
+                            }
+                            
+                        }
+                    })
+                }
+                
+            }
+        }
+
+
+
+        $(function () {
+            $.ajax({
+                url: '/Users/ListUsers',
+                method: "get",
+                success: function (data) {
+                    $.each(data, function (index, obj) {
+                        var state = obj.U_state == 0 ? '正常' : '异常';
+                        $("#show").append(
+                            '<tr>' +
+                            '<td>' + obj.U_uid + '</td>' +
+                            '<td>' + obj.U_account + '</td>' +
+                            '<td>' + obj.U_email + '</td>' +
+                            '<td>' + obj.U_name + '</td>' +
+                            '<td>' + obj.U_codename + '</td>' +
+                            '<td>' + obj.U_ip + '</td>' +
+                            '<td>' + ToJavaScriptDate(obj.U_regtime) + '</td>' +
+                            '<td>' + state + '</td>' +
+                            '<td><input type="hidden" value="' + obj.U_uid + '" id="uid"/><button class="btn btn-default listinfo" type="button">查看</button>&nbsp;&nbsp;<button class="btn btn-default opera" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">修改</button></td>' +
+                            '</tr>'
+                        )
+                    })
+                    $(".listinfo").mouseover(function () {
+                        $(".demo").empty();
+                        var tr = $(this).closest("tr");
+                        var col1_Data = tr.find("td:eq(0)").html();
+                        
+                        $.ajax({
+                            url: '/Users/GetUsers?uid=' + col1_Data,
+                            method: "get",
+                            success: function (data) {
+                                $(".demo").append(
+                                    '<div style="padding:20px;margin:10px;">' +
+                                    '<div>' +
+                                    '<p>' +
+                                    '<span style="font-size:15px;">姓名： '+ data.U_name +'</span>'+
+                                    '</p>' +
+                                    '</div>' +
+                                    '<div>' +
+                                    '<p>' +
+                                    '<span style="font-size:15px;" >证件号码：' + data.U_idcard+'</span>'+
+                                    '</p>' +
+                                    '</div>' +
+                                    '<div>' +
+                                    '<p>' +
+                                    '<span style="font-size:15px;">性别：' + data.U_sex+'</span>' +
+                                    '</p>' +
+                                    '</div>' +
+                                    '<div>' +
+                                    '<p>' +
+                                    '<span style="font-size:15px;">积分：' +data.U_points +'</span>' +
+                                    '</p>' +
+                                    '</div>' +
+                                    '<div>' +
+                                    '<p>' +
+                                    '<span style="font-size:15px;">出生日期：' + ToJavaScriptDate(data.U_birthday)+'</span>' +
+                                    '</p>' +
+                                    '</div>' +
+                                    '<div>' +
+                                    '<p>' +
+                                    '<span style="font-size:15px;">兴趣爱好：' + data.U_dev+'</span>'+
+                                    '</p>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                                $(".demo").css("display", "block");
+                            }
+                        })
+                        //alert("2333");
+                    });
+                    $(".listinfo").mouseout(function () {
+                        $(".demo").css("display", "none");
+                    })
+                    $(".opera").on('click', function () {
+                        var tr = $(this).closest("tr");
+                        $(".OK").on('click', function () {
+                            var col1_Data = tr.find("td:eq(0)").html();
+                            $.ajax({
+                                url: '/Users/UpdateStateByUid?state=' + $('#s1').val() + '&uid=' + col1_Data,
+                                method: "get",
+                                success: function (data) {
+                                    alert(data);
+                                }
+                            })
+                            window.location.reload();
+                        })
+                    })
+                    //$(".listinfo").on('click', function () {
+                    //    alert("23333");
+                    //    //var tr = $(this).closest("tr");
+                    //    //var col1_Data = tr.find("td:eq(0)").html();
+
+                    //})
+
+                }
+            })
+
+            $.ajax({
+                url: '/Users/ListCount',
+                method: "get",
+                success: function (data) {
+                    $("#count").append(
+                        ' （ ' + data + ' ） '
+                    )
+                }
+            })
+        })
+
+    </script>
+</body>
+</html>

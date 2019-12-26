@@ -1,0 +1,46 @@
+/* 妯℃�佹鍒濆鐘舵�� */
+.modalbox {
+    font-family: Arial, Helvetica, sans-serif;
+    /* 閫氳繃 position 璁╅伄缃╁眰鎾戞弧鏁翠釜灞忓箷 */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* 閬僵灞傝儗鏅壊涓洪粦鑹� */
+    background: #000;
+    /* 缁� z-index 涓�涓繃澶х殑鍊硷紝纭繚閬僵灞傗�濈湡鐨勯伄鐩栦綇浜嗏�滄ā鎬佹鑳屽悗鐨勫厓绱� */
+    z-index: 99999;
+    /* 璁剧疆 opacity 涓� 0锛岀敤浜庨殣钘忔ā鎬佹 */
+    opacity: 0;
+    /* 涓�浜涜繃娓℃晥鏋� */
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    /* pointer-events 榧犳爣浜嬩欢鈥滅┛閫忊�濊鍏冪礌骞朵笖鎸囧畾璇ュ厓绱犫�滀笅闈⑩�濈殑浠讳綍涓滆タ */
+    /* 璇峰弬闃咃細https://developer.mozilla.org/zh-CN/docs/Web/CSS/pointer-events */
+    pointer-events: none;
+    overflow:auto;
+}
+
+/* 妯℃�佹鏄剧ず鐘舵�� */
+.modalbox:target {
+    /* 涓嶉�忔槑涓� 0.8 */
+    opacity: 0.97;
+    /* 涓� pointer-events 灞炴�ф湭鎸囧畾鏃剁殑琛ㄧ幇鏁堟灉鐩稿悓 */
+    /* 璇峰弬闃咃細https://developer.mozilla.org/zh-CN/docs/Web/CSS/pointer-events */
+    pointer-events: auto;
+}
+
+/* 妯℃�佹鍐呭锛屼綘涔熷彲浠ヨ嚜瀹氫箟 */
+.modalbox-dialog {
+    width: 600px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    background: #fff;
+    height:300px;
+    overflow:auto;
+}
+
+

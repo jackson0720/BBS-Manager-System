@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <style>
+        .Serach {
+            margin: 5px auto;
+            padding: 5px;
+            width: 600px;
+            height: 120px;
+            border: 0px solid red;
+        }
+
+        .Serach-box {
+            width: 600px;
+            height: 20px;
+            position: relative;
+            left: 140px;
+            top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <script src="../Scripts/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="../Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <h4 style="margin:20px;">更改的状态：</h4>
+                <select style="margin-left:50px;width:190px;" id="s1" class="form-control">
+                    <option value="0">恢复</option>
+                    <option value="1">删除</option>
+                </select><br />
+                <button class="btn btn-default OK" style="margin-left:120px;">确    定</button><br />
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="Serach">
+        <h4 style="text-align:center;">后    台   数   据   库   用   户   组   总   数<b id="count"></b></h4>
+        <div class="Serach-box">
+            <h4><input class="form-control" type="text" id="name" onkeydown="entersearch()" placeholder="输入组别代号进行查询按回车键搜索" /></h4>
+
+        </div>
+    </div>
+    <div>
+        <table border="1" id="show" class="table table-bordered">
+            <tr>
+                <td>组别代号</td>
+                <td>用户组别</td>
+                <td>具备条件</td>
+                <td>入组要求</td>
+                <td>状       态</td>
+                <td>操       作</td>
+            </tr>
+        </table>
+
+    </div>
+    <script>
+
+        function entersearch() {
+            var event = window.event || arguments.callee.caller.arguments[0];
+            if (event.keyCode == 13) {
+                //写需要执行的事件
+                if ($("#name").val() == "") {
+                    alert("请输入相应的组别代号");
+                } else {
+                    $.ajax({
+                        url: '/UserGroup/GetUserGroupByUid?uid=' + $("#name").val(),
+                        method: "get",
+                        success: function (data) {
+                            if (data.Utype_code == null) {
+                                alert("未找到任何信息");
+                                window.location.reload();
+                            } else {
+                                var state = data.Utype_state == 0 ? '正常' : '删除';
+                                $('#show tr:not(:first)').remove();
+                                $("#show").append(
+                                    '<tr>' +
+                                    '<td>' + data.Utype_code + '</td>' +
+                                    '<td>' + data.Utype_name + '</td>' +
+                                    '<td>' + data.Utype_desc + '</td>' +
+                                    '<td>' + data.Utype_remark + '</td>' +
+                                    '<td>' + state + '</td>' +
+                                    '<td><button class="btn btn-default disadd" type="button">新增</button>&nbsp;&nbsp;<button class="btn btn-default dischange" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">操作</button></td>' +
+                                    '</tr>'
+                                )
+
+                                $(".dischange").on('click', function () {
+                                    var tr = $(this).closest("tr");
+                                    //alert("23333");
+                                    $(".OK").on('click', function () {
+                                        var col1_Data = tr.find("td:eq(0)").html();
+                                        $.ajax({
+                                            url: '/UserGroup/UpdateStateByUcode?state=' + $('#s1').val() + '&ucode=' + col1_Data,
+                                            method: "get",
+                                            success: function (data) {
+                                                alert(data);
+                                            }
+                                        })
+                                        window.location.reload();
+                                    })
+                                })
+                            }
+                        }
+                    })
+                }
+                
+            }
+        }
+
+        function ToJavaScriptDate(value) {
+            var pattern = /Date\(([^)]+)\)/;
+            var results = pattern.exec(value);
+            var dt = new Date(parseFloat(results[1]));
+            return dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate();
+        }
+
+        $(function () {
+
+            $.ajax({
+                url: '/UserGroup/ListCount',
+                method: "get",
+                success: function (data) {
+                    $("#count").append(
+                        ' （ ' + data + ' ） '
+                    )
+                }
+            })
+
+            $.ajax({
+                url: '/UserGroup/ListUtype',
+                method: "get",
+                success: function (data) {
+                    $.each(data, function (index, obj) {
+                        var state = obj.Utype_state == 0 ? '正常' : '删除';
+                        $("#show").append(
+                            '<tr>' +
+                            '<td>' + obj.Utype_code + '</td>' +
+                            '<td>' + obj.Utype_name + '</td>' +
+                            '<td>' + obj.Utype_desc + '</td>' +
+                            '<td>' + obj.Utype_remark + '</td>' +
+                            '<td>' + state + '</td>' +
+                            '<td><button class="btn btn-default add" type="button">新增</button>&nbsp;&nbsp;<button class="btn btn-default change" type="button" data-toggle="modal" data-target=".bs-example-modal-sm">操作</button></td>' +
+                            '</tr>'
+                        )
+                    })
+                    $(".change").on('click', function () {
+                        var tr = $(this).closest("tr");
+                        //alert("23333");
+                        $(".OK").on('click', function () {
+                            var col1_Data = tr.find("td:eq(0)").html();
+                            $.ajax({
+                                url: '/UserGroup/UpdateStateByUcode?state=' + $('#s1').val() + '&ucode=' + col1_Data,
+                                method: "get",
+                                success: function (data) {
+                                    alert(data);
+                                }
+                            })
+                            window.location.reload();
+                        })
+                        
+                    })
+                }
+            })
+        })
+
+
+    </script>
+</body>
+</html>
